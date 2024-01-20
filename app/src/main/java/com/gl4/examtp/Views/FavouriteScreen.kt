@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -20,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,8 +34,7 @@ import com.gl4.examtp.Models.Top100.Top100ResponseItem
 fun FavouriteScreen(navController: NavController) {
 
     val favouriteList = FavouritesManager.getFavorites(LocalContext.current)
-    println(" CURRENT LIST IS LALALALA : ${favouriteList}")
-    Column {
+    Column{
         Text(
             text = "Favourites List",
             fontWeight = FontWeight.Bold,
@@ -41,6 +42,21 @@ fun FavouriteScreen(navController: NavController) {
             modifier = Modifier.padding(10.dp)
         )
         // Access the movies list from the ViewModel
+
+        if(favouriteList.isEmpty()){
+            Text(
+                text = "You have zero movies in your favourite list !",
+                textAlign = TextAlign.Center,
+                // on below line adding text color.
+                color = Color.Red,
+                // on below line adding font weight.
+                fontWeight = FontWeight.Bold,
+                // on below line adding padding from all sides.
+                modifier = Modifier
+                    .padding(10.dp)
+                    .fillMaxWidth()
+            )
+        }
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
