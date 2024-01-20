@@ -123,4 +123,7 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-rxjava2:1.3.3")
 
     implementation("com.github.bumptech.glide:compose:1.0.0-alpha.1")
+
+    //dependency for the navigation.
+    implementation("androidx.navigation:navigation-compose:2.7.0-rc01")
 }
