@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -13,10 +14,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -24,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.gl4.examtp.Favourites.FavouritesManager
 import com.gl4.examtp.ViewModels.MovieDetailsViewModel
 import com.gl4.examtp.ViewModels.MovieDetailsViewModelFactory
 
@@ -38,46 +42,71 @@ fun DetailScreen(navController: NavController){
     movieDetails.getDetails(movieId.toString())
     val movieState = movieDetails.movieDetails.observeAsState()
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "Movie Details") },
-                navigationIcon = {
-                    // "Go Back" Button
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
+    val context = LocalContext.current
+
+
+
+    CompositionLocalProvider(LocalContext provides context) {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text(text = "Movie Details") },
+                    navigationIcon = {
+                        // "Go Back" Button
+                        IconButton(onClick = { navController.popBackStack() }) {
+                            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
+                        }
+                    }
+                )
+            }
+        ) {
+            movieState.value?.let { movie ->
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = 80.dp,
+                            start = 10.dp,
+                            end = 10.dp
+                        )
+                ) {
+                    var exists = FavouritesManager.movieExists(movie,context)
+                    LoadImage(movie.image)
+                    Text(
+                        text = movie.title,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 15.sp,
+                        modifier = Modifier.padding(10.dp),
+                        maxLines = 2,
+                    )
+                    Text(
+                        text = movie.year.toString(),
+                        fontSize = 13.sp,
+                        modifier = Modifier.padding(6.dp),
+                        maxLines = 3,
+                        overflow = TextOverflow.Ellipsis,
+                        color = Color.Gray
+                    )
+                    Button(onClick = {
+                        if(exists){
+                            //REMOVE FUNCTION
+                        }else{
+                            FavouritesManager.addFavorite(
+                                movie,
+                                context
+                            )
+                            exists = FavouritesManager.movieExists(movie,context)
+                        }
+
+                    }) {
+                        if(exists){
+                            Text( text =  "Remove From Favorites")
+                        }else{
+                            Text( text =  "Add To Favorites")
+                        }
                     }
                 }
-            )
-        }
-    ) {
-        movieState.value?.let { movie ->
-            Column(modifier = Modifier
-                .fillMaxSize()
-                .padding(
-                    top = 80.dp,
-                    start = 10.dp,
-                    end = 10.dp
-                )
-            ) {
-                LoadImage(movie.image)
-                Text(
-                    text = movie.title,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 15.sp,
-                    modifier = Modifier.padding(10.dp),
-                    maxLines = 2,
-                )
-                Text(
-                    text = movie.year.toString(),
-                    fontSize = 13.sp,
-                    modifier = Modifier.padding(6.dp),
-                    maxLines = 3,
-                    overflow = TextOverflow.Ellipsis,
-                    color = Color.Gray
-                )
             }
         }
     }
-
 }

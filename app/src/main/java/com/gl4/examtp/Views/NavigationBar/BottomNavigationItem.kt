@@ -2,7 +2,7 @@ package com.gl4.examtp.Views.NavigationBar
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.ui.graphics.vector.ImageVector
 
 //initializing the data class with default parameters
@@ -20,9 +20,9 @@ data class BottomNavigationItem(
                 route = Screens.Home.route
             ),
             BottomNavigationItem(
-                label = "Detail",
-                icon = Icons.Filled.Info,
-                route = Screens.Detail.route
+                label = "Favourites",
+                icon = Icons.Filled.Star,
+                route = Screens.Favourite.route
             )
         )
     }

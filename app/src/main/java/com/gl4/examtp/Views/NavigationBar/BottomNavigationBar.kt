@@ -11,19 +11,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.gl4.examtp.Views.DetailScreen
+import com.gl4.examtp.Views.FavouriteScreen
 import com.gl4.examtp.Views.HomeScreen
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@Preview()
 @Composable()
 fun BottomNavigationBar() {
 //initializing the default selected item
@@ -82,6 +83,10 @@ fun BottomNavigationBar() {
             composable(Screens.Detail.route) {
                 //call our composable screens here
                 DetailScreen(navController)
+            }
+            composable(Screens.Favourite.route) {
+                //call our composable screens here
+                FavouriteScreen(navController)
             }
         }
     }
