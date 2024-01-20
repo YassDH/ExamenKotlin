@@ -1,5 +1,6 @@
 package com.gl4.examtp.Views
 
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -30,7 +31,7 @@ fun DetailScreen(navController: NavController){
 
     movieState.value?.let { movie ->
         Column(modifier = Modifier.fillMaxSize()) {
-            LoadImage(movie.image)
+            LoadImage(movie.big_image)
             Text(
                 text = movie.title,
                 fontWeight = FontWeight.Bold,
