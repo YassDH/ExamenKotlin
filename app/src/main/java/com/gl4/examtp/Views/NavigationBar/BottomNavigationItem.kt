@@ -2,6 +2,7 @@ package com.gl4.examtp.Views.NavigationBar
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.ui.graphics.vector.ImageVector
 
@@ -18,6 +19,11 @@ data class BottomNavigationItem(
                 label = "Home",
                 icon = Icons.Filled.Home,
                 route = Screens.Home.route
+            ),
+            BottomNavigationItem(
+                label = "Search",
+                icon = Icons.Filled.Search,
+                route = Screens.Search.route
             ),
             BottomNavigationItem(
                 label = "Favourites",
