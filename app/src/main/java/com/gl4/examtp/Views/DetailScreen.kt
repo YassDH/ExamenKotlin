@@ -64,7 +64,7 @@ import com.gl4.examtp.ViewModels.MovieDetailsViewModelFactory
 
 @SuppressLint("UnrememberedMutableState")
 @Composable()
-fun DetailScreen(navController: NavController){
+fun DetailScreen(navController: NavController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val movieId = navBackStackEntry?.arguments?.getString("movieId")
 
@@ -75,7 +75,8 @@ fun DetailScreen(navController: NavController){
     val context = LocalContext.current
 
 
-    val defaultExistValue = movieId?.let { FavouritesManager.movieExists(movieId = it, context = context) }
+    val defaultExistValue =
+        movieId?.let { FavouritesManager.movieExists(movieId = it, context = context) }
     var exists: Boolean by remember { mutableStateOf(false) }
     LaunchedEffect(defaultExistValue) {
         if (defaultExistValue != null)
@@ -84,136 +85,136 @@ fun DetailScreen(navController: NavController){
 
     CompositionLocalProvider(LocalContext provides context) {
 
-val launchBrowser = rememberLauncherForActivityResult(
-    contract = ActivityResultContracts.StartActivityForResult()
-) { result ->
-    // Handle result if needed
-}
-Scaffold(
-floatingActionButtonPosition = FabPosition.Center,
-floatingActionButton = {
-    Button(
-        modifier = Modifier
-            .wrapContentWidth()
-            .height(56.dp),
-        colors = ButtonDefaults.buttonColors(
-        ),
-        shape = RoundedCornerShape(32.dp),
-        onClick = {
-            movieState.value?.let { movie ->
-                if (exists) {
-                    FavouritesManager.removeFavorite(movie, context)
-                } else {
-                    FavouritesManager.addFavorite(movie, context)
-                }
-            }
-            exists =!exists
-            println(exists)
-        },
-    ) {
-        Text(text = if (exists) "Remove From Favorites" else "Add To Favorites")
-    }
-}
-
-) { padding ->
-    Column(
-        modifier = Modifier
-            .padding(padding)
-            .fillMaxSize()
-            .verticalScroll(scrollState)
-    ) {
-        Row(
-            modifier = Modifier.padding(
-                horizontal = 16.dp, vertical = 8.dp
-            ),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            IconButton(onClick = {
-                navController.popBackStack()
-            }) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Back Button")
-            }
-            Spacer(modifier = Modifier.width(16.dp))
-            Text(text = "Movie Detail")
+        val launchBrowser = rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            // Handle result if needed
         }
-        movieState.value?.let { movie ->
-            Row(
-                modifier = Modifier
-                    .height(320.dp)
-                    .padding(horizontal = 24.dp)
-            ) {
-                Clickable(
-                    onClick = {
-                        navController.navigate(movie.imdb_link)
-                    }
-                ) {
-                    loadImage(
-                        path = movie.big_image,
-                        contentDescription = "Movie Image",
-                        contentScale = ContentScale.FillBounds,
-                        modifier = Modifier
-                            .weight(0.7f)
-                            .height(320.dp)
-                            .clip(RoundedCornerShape(16.dp)),
-                        imdbLink = movie.imdb_link,
-                    )
-                }
-                Spacer(modifier = Modifier.width(24.dp))
-                Column(
+        Scaffold(
+            floatingActionButtonPosition = FabPosition.Center,
+            floatingActionButton = {
+                Button(
                     modifier = Modifier
-                        .height(320.dp)
-                        .weight(0.3f),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.SpaceEvenly
+                        .wrapContentWidth()
+                        .height(56.dp),
+                    colors = ButtonDefaults.buttonColors(
+                    ),
+                    shape = RoundedCornerShape(32.dp),
+                    onClick = {
+                        movieState.value?.let { movie ->
+                            if (exists) {
+                                FavouritesManager.removeFavorite(movie, context)
+                            } else {
+                                FavouritesManager.addFavorite(movie, context)
+                            }
+                        }
+                        exists = !exists
+                        println(exists)
+                    },
                 ) {
-                    MovieInfo(
-                        painterResourceId = R.drawable.baseline_videocam,
-                        title = "Released",
-                        value = movie.year.toString()
-                    )
-                    MovieInfo(
-                        painterResourceId = R.drawable.baseline_leaderboard,
-                        title = "Rank",
-                        value = movie.rank.toString()
-                    )
-                    MovieInfo(
-                        painterResourceId = R.drawable.baseline_stars,
-                        title = "Rating",
-                        value = movie.rating
-                    )
+                    Text(text = if (exists) "Remove From Favorites" else "Add To Favorites")
                 }
             }
-            Text(
-                movie.title,
-                modifier = Modifier.padding(
-                    horizontal = 24.dp, vertical = 16.dp
-                )
-            )
-            Text(
-                "Genre",
-                modifier = Modifier.padding(
-                    horizontal = 24.dp, vertical = 16.dp
-                )
-            )
-            Categories(movie.genre)
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(
-                "Description", style = MaterialTheme.typography.titleSmall,
-                modifier = Modifier.padding(
-                    horizontal = 24.dp
-                )
-            )
-            Text(
-                movie.description, style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(
-                    horizontal = 24.dp, vertical = 16.dp
-                )
-            )
-            Spacer(modifier = Modifier.height(60.dp))
+
+        ) { padding ->
+            Column(
+                modifier = Modifier
+                    .padding(padding)
+                    .fillMaxSize()
+                    .verticalScroll(scrollState)
+            ) {
+                Row(
+                    modifier = Modifier.padding(
+                        horizontal = 16.dp, vertical = 8.dp
+                    ),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    IconButton(onClick = {
+                        navController.popBackStack()
+                    }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back Button")
+                    }
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Text(text = "Movie Detail")
+                }
+                movieState.value?.let { movie ->
+                    Row(
+                        modifier = Modifier
+                            .height(320.dp)
+                            .padding(horizontal = 24.dp)
+                    ) {
+                        Clickable(
+                            onClick = {
+                                navController.navigate(movie.imdb_link)
+                            }
+                        ) {
+                            loadImage(
+                                path = movie.big_image,
+                                contentDescription = "Movie Image",
+                                contentScale = ContentScale.FillBounds,
+                                modifier = Modifier
+                                    .weight(0.7f)
+                                    .height(320.dp)
+                                    .clip(RoundedCornerShape(16.dp)),
+                                imdbLink = movie.imdb_link,
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(24.dp))
+                        Column(
+                            modifier = Modifier
+                                .height(320.dp)
+                                .weight(0.3f),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            MovieInfo(
+                                painterResourceId = R.drawable.baseline_videocam,
+                                title = "Released",
+                                value = movie.year.toString()
+                            )
+                            MovieInfo(
+                                painterResourceId = R.drawable.baseline_leaderboard,
+                                title = "Rank",
+                                value = movie.rank.toString()
+                            )
+                            MovieInfo(
+                                painterResourceId = R.drawable.baseline_stars,
+                                title = "Rating",
+                                value = movie.rating
+                            )
+                        }
+                    }
+                    Text(
+                        movie.title,
+                        modifier = Modifier.padding(
+                            horizontal = 24.dp, vertical = 16.dp
+                        )
+                    )
+                    Text(
+                        "Genre",
+                        modifier = Modifier.padding(
+                            horizontal = 24.dp, vertical = 16.dp
+                        )
+                    )
+                    Categories(movie.genre)
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(
+                        "Description", style = MaterialTheme.typography.titleSmall,
+                        modifier = Modifier.padding(
+                            horizontal = 24.dp
+                        )
+                    )
+                    Text(
+                        movie.description, style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.padding(
+                            horizontal = 24.dp, vertical = 16.dp
+                        )
+                    )
+                    Spacer(modifier = Modifier.height(60.dp))
+                }
+            }
         }
     }
-}
-}
 }
 
 @Composable

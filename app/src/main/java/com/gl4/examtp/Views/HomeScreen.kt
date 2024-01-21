@@ -1,5 +1,8 @@
 package com.gl4.examtp.Views
 
+import ApiErrorScreen
+import NetworkErrorScreen
+import android.content.Context
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Column
@@ -26,6 +29,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
@@ -34,46 +38,65 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 
 
-@Composable()
-fun HomeScreen(navController : NavController,
-               top100ViewModel: Top100ViewModel = viewModel(factory = Top100ViewModelFactory())){
-
+@Composable
+fun HomeScreen(
+    navController: NavController,
+) {
+    val context= LocalContext.current
+    val top100ViewModel: Top100ViewModel = viewModel(factory = Top100ViewModelFactory(context))
     val top100ListState = top100ViewModel.top100List.observeAsState()
+    val apiErrorState = top100ViewModel.apiError.observeAsState()
+    val connectionErrorState=top100ViewModel.connectionError.observeAsState()
     Column {
-        Text(
-            text = "Top 100 Movies",
-            fontWeight = FontWeight.Bold,
-            fontSize = 22.sp,
-            modifier = Modifier.padding(10.dp)
-        )
-        // Access the movies list from the ViewModel
+        if(connectionErrorState.value==true){
+         NetworkErrorScreen(
+             onRetry = { top100ViewModel.retry() },
+             modifier = Modifier.fillMaxSize()
+         )
+        }
+        if (apiErrorState.value != null) {
+            // Display error message or error screen
+            ApiErrorScreen(
+                errorMessage = apiErrorState.value!!,
+                onRetry = { top100ViewModel.retry() },
+                modifier = Modifier.fillMaxSize()
+            )
+        } else {
+            Text(
+                text = "Top 100 Movies",
+                fontWeight = FontWeight.Bold,
+                fontSize = 22.sp,
+                modifier = Modifier.padding(10.dp)
+            )
 
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.padding(10.dp)
-        ) {
-            top100ListState.value?.let { movies ->
-                items(movies){ movie ->
-                    MovieCard(
-                        movie=movie,
-                        onMovieClick = { movieId ->
-                            navController.navigate("detail/${movieId}")
-                        }
-                    )
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(3),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.padding(10.dp)
+            ) {
+                top100ListState.value?.let { movies ->
+                    items(movies) { movie ->
+                        MovieCard(
+                            movie = movie,
+                            onMovieClick = { movieId ->
+                                navController.navigate("detail/${movieId}")
+                            }
+                        )
+                    }
                 }
             }
         }
     }
 }
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable()
 fun MovieCard(
-    movie : Top100ResponseItem,
+    movie: Top100ResponseItem,
     onMovieClick: (String) -> Unit
-){
+) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -89,7 +112,7 @@ fun MovieCard(
             colors = CardDefaults.cardColors(
                 containerColor = Color.White
             ),
-            onClick={
+            onClick = {
                 onMovieClick(movie.id)
             }
         ) {
@@ -118,6 +141,6 @@ fun MovieCard(
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable()
-fun LoadImage(path : String){
+fun LoadImage(path: String) {
     GlideImage(model = path, contentDescription = "LoadingImage")
 }
