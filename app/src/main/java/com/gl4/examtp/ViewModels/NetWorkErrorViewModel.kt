@@ -12,7 +12,9 @@ class NetWorkErrorViewModel(private val context: Context) : ViewModel() {
     private val _connectionError = MutableLiveData<Boolean>()
     val connectionError: LiveData<Boolean> = _connectionError
 
-
+    init {
+        checkNetwork()
+    }
     private fun isNetworkActive(): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

@@ -51,14 +51,14 @@ fun Search(
     Column {
         if (connectionErrorState.value == true) {
             NetworkErrorScreen(
-                onRetry = { navController.navigate("home") },
+                onRetry = { navController.navigate("search") },
                 modifier = Modifier.fillMaxSize()
             )
         } else if (apiErrorState.value != null) {
             // Display error message or error screen
             ApiErrorScreen(
                 errorMessage = apiErrorState.value!!,
-                onRetry = { navController.navigate("home") },
+                onRetry = { navController.navigate("search") },
                 modifier = Modifier.fillMaxSize()
             )
         } else {

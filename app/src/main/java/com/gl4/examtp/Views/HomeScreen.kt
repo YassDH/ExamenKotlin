@@ -56,16 +56,14 @@ fun HomeScreen(
              onRetry = { navController.navigate("home")},
              modifier = Modifier.fillMaxSize()
          )
-        }
-        else if (apiErrorState.value != null) {
+        } else if (apiErrorState.value != null) {
             // Display error message or error screen
             ApiErrorScreen(
                 errorMessage = apiErrorState.value!!,
                 onRetry = { navController.navigate("home") },
                 modifier = Modifier.fillMaxSize()
             )
-        }
-    else {
+        } else {
             Text(
                 text = "Top 100 Movies",
                 fontWeight = FontWeight.Bold,

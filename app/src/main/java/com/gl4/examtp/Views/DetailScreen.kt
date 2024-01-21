@@ -66,13 +66,8 @@ import com.gl4.examtp.ViewModels.MovieDetailsViewModel
 import com.gl4.examtp.ViewModels.MovieDetailsViewModelFactory
 import com.gl4.examtp.ViewModels.NetWorkErrorViewModel
 import com.gl4.examtp.ViewModels.NetWorkErrorViewModelFactory
-import androidx.lifecycle.viewModelScope
 import com.gl4.examtp.ViewModels.Top100ViewModel
 import com.gl4.examtp.ViewModels.Top100ViewModelFactory
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-import kotlinx.coroutines.async
 
 @SuppressLint("UnrememberedMutableState")
 @Composable()
