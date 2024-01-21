@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.gl4.examtp.API.RetrofitHelper
 import com.gl4.examtp.Models.Top100.Top100Response
+import com.gl4.examtp.Models.Top100.Top100ResponseItem
 
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,6 +29,9 @@ class Top100ViewModel(private val context: Context) : ViewModel() {
 
     private val _connectionError = MutableLiveData<Boolean>()
     val connectionError: LiveData<Boolean> = _connectionError
+
+    private val searchResultsMutable = MutableLiveData<List<Top100ResponseItem>>()
+    var searchResults : LiveData<List<Top100ResponseItem>> = searchResultsMutable
 
     init {
         getData()
@@ -75,7 +79,19 @@ class Top100ViewModel(private val context: Context) : ViewModel() {
         )
     }
 
+
     fun retry() {
         getData()
+    }
+    fun searchMovie(movieName: String){
+        val filteredMovies = _top100Response.value?.filter {
+            it.title.contains(movieName.trim(), ignoreCase = true)
+        } ?: emptyList()
+        if(movieName.trim() == ""){
+            searchResultsMutable.value = emptyList()
+        }else{
+            searchResultsMutable.value = filteredMovies
+        }
+
     }
 }

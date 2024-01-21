@@ -23,6 +23,7 @@ import androidx.navigation.compose.composable
 import com.gl4.examtp.Views.DetailScreen
 import com.gl4.examtp.Views.FavouriteScreen
 import com.gl4.examtp.Views.HomeScreen
+import com.gl4.examtp.Views.Search
 
 
 @Preview()
@@ -89,6 +90,10 @@ fun BottomNavigationBar() {
             composable(Screens.Favourite.route) {
                 //call our composable screens here
                 FavouriteScreen(navController)
+            }
+            composable(Screens.Search.route) {
+                //call our composable screens here
+                Search(navController)
             }
         }
     }
