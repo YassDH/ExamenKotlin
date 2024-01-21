@@ -34,10 +34,10 @@ L'application suit l'architecture MVVM (Modèle-Vue-VueModèle) pour une gestion
 
 | | | |
 :-------------------------:|:-------------------------:|:-------------------------:
-|Home| Search | Favorites |
-| ![Home](/Screenshots/HomeScreen.png) | ![Search](/Screenshots/SearchScreen.png) | ![Favorites](/Screenshots/FavoritesScreen.png)
+|Home| Search | Favourites |
+| ![Home](/Screenshots/HomeScreen.png) | ![Search](/Screenshots/SearchScreen.png) | ![Favourites](/Screenshots/FavouritesScreen.png)
 |Movie Details| Errors| |
-| ![Movie Details](/Screenshots/MovieDeatils.png) | ![Errors](/Screenshots/MonGarage.png) | |
+| ![Movie Details](/Screenshots/MovieDeatilsScreen.png) | ![Errors](/Screenshots/MonGarage.png) | |
 
 
 ## Technologies Utilisées
