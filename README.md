@@ -25,6 +25,7 @@ L'application mobile Top 100 Movies récupère la liste des 100 meilleurs films 
 L'application suit l'architecture MVVM (Modèle-Vue-VueModèle) pour une gestion propre des données et une séparation des préoccupations.
 
 ## API
+Lien de l'API: https://rapidapi.com/rapihub-rapihub-default/api/imdb-top-100-movies/
 |        Endpoint       | Method |                                         Description                                        |
 |:---------------------|:------:|:------------------------------------------------------------------------------------------|
 | /           |  GET  | Reetourne la liste des Top 100 films par IMDB                                              |
@@ -43,7 +44,7 @@ L'application suit l'architecture MVVM (Modèle-Vue-VueModèle) pour une gestion
 ## Technologies Utilisées
 
 - [Kotlin](https://kotlinlang.org/): Langage de programmation principal.
-- [Android Jetpack](https://developer.android.com/jetpack): Ensemble de bibliothèques Android recommandées.
+- [Jetpack Compose](https://developer.android.com/jetpack/compose):  Ensemble de bibliothèques Android recommandées pour le développement d'interfaces utilisateur déclaratives.
 - [Retrofit](https://square.github.io/retrofit/): Client HTTP pour la récupération des données depuis une API.
 - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel): Gestion des données et de la logique d'affichage.
 - [SharedPreferences](https://developer.android.com/training/data-storage/shared-preferences): Stockage des données locales, notamment la liste des films favoris.
