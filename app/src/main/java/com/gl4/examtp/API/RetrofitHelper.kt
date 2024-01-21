@@ -7,8 +7,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitHelper {
     private const val BASE_URL = "https://imdb-top-100-movies.p.rapidapi.com/"
     //headers
-    private const val HEADER_API_KEY = "3ff9f43460mshfa30p17e930jsn0d1c3d5204fd"
-    //3ff9f43460mshfa4faefc2b75630p17e930jsn0d1c3d5204fd
+    private const val HEADER_API_KEY = "c9f08e88d0msh3a83a7b9b90cjsn3972247be38c"
+    //c9f08e88d0msh3a83a7b9b90cbb0p1b6cdbjsn3972247be38c
     private const val HEADER_HOST = "imdb-top-100-movies.p.rapidapi.com"
     /**
      * The OkHttpClient with headers added.
