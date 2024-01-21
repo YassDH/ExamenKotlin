@@ -37,8 +37,8 @@ Lien de l'API: https://rapidapi.com/rapihub-rapihub-default/api/imdb-top-100-mov
 :-------------------------:|:-------------------------:|:-------------------------:
 |Home| Search | Favourites |
 | ![Home](/Screenshots/HomeScreen.png) | ![Search](/Screenshots/SearchScreen.png) | ![Favourites](/Screenshots/FavouritesScreen.png)
-|Movie Details| Errors| |
-| ![Movie Details](/Screenshots/MovieDetailsScreen.png) | ![Errors](/Screenshots/MonGarage.png) | |
+|Movie Details| Network Error | Fetch Error |
+| ![Movie Details](/Screenshots/MovieDetailsScreen.png) | ![Errors](/Screenshots/NetworkErrorScreen.png.png) | ![Errors](/Screenshots/FetchErrorScreen.png.png) |
 
 
 ## Technologies Utilisées
