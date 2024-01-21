@@ -13,7 +13,9 @@ class MovieDetailsViewModel() : ViewModel() {
     private val movieDetailsResponse = MutableLiveData<MovieDetailsResponse>()
     var movieDetails : LiveData<MovieDetailsResponse> = movieDetailsResponse
 
-    fun getDetails(id : String){
+    private val _apiError = MutableLiveData<String>("")
+    val apiError: LiveData<String> = _apiError
+     fun getDetails(id : String){
         RetrofitHelper.retrofitService.getMovieById(id).enqueue(
             object : Callback<MovieDetailsResponse> {
                 override fun onResponse(
@@ -22,12 +24,13 @@ class MovieDetailsViewModel() : ViewModel() {
                 ) {
                     if(response.isSuccessful){
                         movieDetailsResponse.value = response.body()
+                        _apiError.value=""
                     }else{
-                        println("Weather update failed :ge}")
+                        _apiError.value = "Failed to fetch data. Please try again."
                     }
                 }
                 override fun onFailure(call: Call<MovieDetailsResponse>, t: Throwable) {
-                    println("Weather update failed : ${t.message}")
+                    _apiError.value = "Failed to fetch data. Please try again."
                 }
 
             }
