@@ -28,7 +28,7 @@ L'application suit l'architecture MVVM (Modèle-Vue-VueModèle) pour une gestion
 |        Endpoint       | Method |                                         Description                                        |
 |:---------------------|:------:|:------------------------------------------------------------------------------------------|
 | /           |  GET  | Reetourne la liste des Top 100 films par IMDB                                              |
-| /id        |  GET  | "Retourne plus de détails supplémentaires sur le film choisi tels que le titre, l'année, le genre...                                       |
+| /id        |  GET  | Retourne plus de détails supplémentaires sur le film choisi tels que le titre, l'année, le genre...                                       |
 
 ## Screenshots
 
