@@ -36,6 +36,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.gl4.examtp.ViewModels.NetWorkErrorViewModel
+import com.gl4.examtp.ViewModels.NetWorkErrorViewModelFactory
 
 
 @Composable
@@ -43,25 +45,27 @@ fun HomeScreen(
     navController: NavController,
 ) {
     val context= LocalContext.current
-    val top100ViewModel: Top100ViewModel = viewModel(factory = Top100ViewModelFactory(context))
+    val top100ViewModel: Top100ViewModel = viewModel(factory = Top100ViewModelFactory())
     val top100ListState = top100ViewModel.top100List.observeAsState()
     val apiErrorState = top100ViewModel.apiError.observeAsState()
-    val connectionErrorState=top100ViewModel.connectionError.observeAsState()
+    val netWorkErrorViewModel: NetWorkErrorViewModel = viewModel(factory = NetWorkErrorViewModelFactory(context))
+    val connectionErrorState=netWorkErrorViewModel.connectionError.observeAsState()
     Column {
         if(connectionErrorState.value==true){
          NetworkErrorScreen(
-             onRetry = { top100ViewModel.retry() },
+             onRetry = { navController.navigate("home")},
              modifier = Modifier.fillMaxSize()
          )
         }
-        if (apiErrorState.value != null) {
+        else if (apiErrorState.value != null) {
             // Display error message or error screen
             ApiErrorScreen(
                 errorMessage = apiErrorState.value!!,
-                onRetry = { top100ViewModel.retry() },
+                onRetry = { navController.navigate("home") },
                 modifier = Modifier.fillMaxSize()
             )
-        } else {
+        }
+    else {
             Text(
                 text = "Top 100 Movies",
                 fontWeight = FontWeight.Bold,

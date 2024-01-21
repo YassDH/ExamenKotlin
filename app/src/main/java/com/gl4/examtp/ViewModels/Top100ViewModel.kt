@@ -18,46 +18,24 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-
-class Top100ViewModel(private val context: Context) : ViewModel() {
+class Top100ViewModel() : ViewModel() {
 
     private val _top100Response = MutableLiveData<Top100Response>()
     val top100List: LiveData<Top100Response> = _top100Response
 
-    private val _apiError = MutableLiveData<String?>()
+    private val _apiError = MutableLiveData<String?>(null)
     val apiError: LiveData<String?> = _apiError
 
-    private val _connectionError = MutableLiveData<Boolean>()
-    val connectionError: LiveData<Boolean> = _connectionError
-
     private val searchResultsMutable = MutableLiveData<List<Top100ResponseItem>>()
-    var searchResults : LiveData<List<Top100ResponseItem>> = searchResultsMutable
+    var searchResults: LiveData<List<Top100ResponseItem>> = searchResultsMutable
 
     init {
         getData()
     }
 
-    private fun isNetworkActive(): Boolean {
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val network = connectivityManager.activeNetwork
-            val capabilities = connectivityManager.getNetworkCapabilities(network)
-            return capabilities != null &&
-                    (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
-                            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR))
-        } else {
-            val networkInfo = connectivityManager.activeNetworkInfo
-            return networkInfo != null && networkInfo.isConnected
-        }
-    }
 
     private fun getData() {
-        if (!isNetworkActive()) {
-            _connectionError.value = true
-            return
-        }
 
         RetrofitHelper.retrofitService.getTop100().enqueue(
             object : Callback<Top100Response> {
@@ -67,6 +45,7 @@ class Top100ViewModel(private val context: Context) : ViewModel() {
                 ) {
                     if (response.isSuccessful) {
                         _top100Response.value = response.body()
+                        _apiError.value=null
                     } else {
                         _apiError.value = "Failed to fetch data. Please try again."
                     }
@@ -80,16 +59,14 @@ class Top100ViewModel(private val context: Context) : ViewModel() {
     }
 
 
-    fun retry() {
-        getData()
-    }
-    fun searchMovie(movieName: String){
+
+    fun searchMovie(movieName: String) {
         val filteredMovies = _top100Response.value?.filter {
             it.title.contains(movieName.trim(), ignoreCase = true)
         } ?: emptyList()
-        if(movieName.trim() == ""){
+        if (movieName.trim() == "") {
             searchResultsMutable.value = emptyList()
-        }else{
+        } else {
             searchResultsMutable.value = filteredMovies
         }
 
